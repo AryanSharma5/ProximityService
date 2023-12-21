@@ -1,4 +1,4 @@
-"""Proximity Service entrypoint
+"""Proximity Service application factory
 """
 
 from flask import Flask
