@@ -1,5 +1,4 @@
 from flask import request, jsonify, make_response
-from haversine import haversine
 
 from . import nearby_location_bp
 
