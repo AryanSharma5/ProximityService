@@ -17,7 +17,9 @@ ignore-paths=
 
 # Files or directories matching the regex patterns are skipped. The regex
 # matches against base names, not paths.
-ignore-patterns=^\.#
+ignore-patterns=
+    ^\.#
+    ^src/db/migrations/
 
 # Pickle collected data for later comparisons.
 persistent=yes

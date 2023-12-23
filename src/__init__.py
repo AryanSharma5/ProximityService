@@ -1,19 +1,22 @@
 """Proximity Service application factory
+
+[Todo]:
+    - add nearby_locations geohash algorithm
+    - update ci/cd for prodcutionizing the application and create first version.
+    - add auth using JWT
 """
 
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
-from .config import AppConfig
-from .proximity_service import proximity_service_bp
-from .nearby_location import nearby_location_bp
-from .businesses import businesses_bp
+db = SQLAlchemy()
 
 
-def create_app(config=AppConfig):
+def create_app(config):
     app = Flask(__name__)
     app.config.from_object(config)
-    api_version = app.config.get("API_VERSION")
-    app.register_blueprint(blueprint=proximity_service_bp, url_prefix=api_version)
-    app.register_blueprint(blueprint=nearby_location_bp, url_prefix=api_version)
-    app.register_blueprint(blueprint=businesses_bp, url_prefix=api_version)
+
+    db.init_app(app)
+    migrate = Migrate(app, db)
     return app
