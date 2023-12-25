@@ -1,3 +1,4 @@
+import os
 from flask.logging import create_logger
 
 from . import create_app
@@ -6,7 +7,11 @@ from .proximity_service import proximity_service_bp
 from .businesses import businesses_bp
 from .nearby_location import nearby_location_bp
 
-app = create_app(config=config["dev"])
+app_env = os.environ.get("APP_ENV", "")
+if not app_env:
+    raise KeyError("APP_ENV is not set.")
+
+app = create_app(config=config[app_env])
 logger = create_logger(app=app)
 logger.setLevel(app.config.get("LOGGING_LEVEL"))
 

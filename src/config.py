@@ -7,27 +7,26 @@ from dataclasses import dataclass
 class AppConfig:
     API_VERSION: str = "/v1"
     SQLALCHEMY_TRACK_MODIFICATIONS: bool = True
+    LOGGING_LEVEL: str = logging.INFO
 
 
 @dataclass
 class DevAppConfig(AppConfig):
-    ENV: str = "dev"
+    ENV: str = "DEV"
     HOST: str = "127.0.0.1"
     PORT: str = "5000"
     DEBUG: bool = True
-    LOGGING_LEVEL: str = logging.INFO
     # postgresql+psycopg2://user:password@host:port/database
     SQLALCHEMY_DATABASE_URI: str = os.environ.get("SQLALCHEMY_DATABASE_URI_DEV")
 
 
 @dataclass
 class ProdAppConfig(AppConfig):
-    ENV: str = "prod"
+    ENV: str = "PROD"
     HOST: str = "0.0.0.0"
     PORT: str = "8000"
     DEBUG: bool = False
-    LOGGING_LEVEL: str = logging.ERROR
     SQLALCHEMY_DATABASE_URI: str = os.environ.get("SQLALCHEMY_DATABASE_URI_PROD")
 
 
-config = {"dev": DevAppConfig, "prod": ProdAppConfig}
+config = {"DEV": DevAppConfig, "PROD": ProdAppConfig}

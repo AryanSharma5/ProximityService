@@ -1,7 +1,7 @@
 """Proximity Service application factory
 
 [Todo]:
-    - add nearby_locations geohash algorithm
+    - find a way to provide configuration from a file using circleci.
     - update ci/cd for prodcutionizing the application and create first version.
     - add auth using JWT
 """

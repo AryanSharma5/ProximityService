@@ -6,16 +6,38 @@ jobs:
       - image: cimg/python:3.12
     steps:
       - checkout
-      - run: make install-deps
-      - run: make linting
-      - run: make test
+      - run:
+          name: get proximity service env variables
+          command: |
+            ( set -o posix ; set ) | grep 'APP_ENV\|SQLALCHEMY_DATABASE_URI_PROD\|POSTGRES_DB\|POSTGRES_USER\|POSTGRES_PASSWORD' > .env.dev
+            ls -la
+            cat .env.dev
+      - run:
+          name: Install dependencies
+          command: make install-deps
+      - run:
+          name: Linting
+          command: make linting
+      - run:
+          name: Testing
+          command: make test
 
   deploy:
     docker:
       - image: cimg/python:3.12
     steps:
       - checkout
-      - run: echo "Building docker image"
+      - run:
+          name: set config
+          command: |
+            ( set -o posix ; set ) | grep 'APP_ENV\|SQLALCHEMY_DATABASE_URI_PROD' > .env.prod
+            ( set -o posix ; set ) | grep 'POSTGRES_DB\|POSTGRES_USER\|POSTGRES_PASSWORD' > .env.prod.db
+      - run:
+          name: Image creation
+          command: |
+            echo "Image creation in progress.."
+            docker-compose build --no-cache
+            echo "Image creation done."
 
 workflows:
   dev-workflow:

@@ -1,6 +1,11 @@
 #!/bin/sh
 
-# List your all env export cmds in below file
-. src/env.sh
+ENV=$1
 
-flask --app src.app run --reload
+if [ "$ENV" = "DEV" ]; then
+	# List your all dev env export cmds in below file
+	. src/env.sh
+	echo "Environment exports done!!"
+fi
+
+python -m src.app
