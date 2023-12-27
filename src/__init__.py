@@ -1,9 +1,7 @@
 """Proximity Service application factory
 
 [Todo]:
-    - find a way to provide configuration from a file using circleci.
-    - update ci/cd for prodcutionizing the application and create first version.
-    - add auth using JWT
+    - add gunicorn and nginx for production.
 """
 
 from flask import Flask

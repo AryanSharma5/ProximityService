@@ -7,12 +7,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: get proximity service env variables
-          command: |
-            ( set -o posix ; set ) | grep 'APP_ENV\|SQLALCHEMY_DATABASE_URI_PROD\|POSTGRES_DB\|POSTGRES_USER\|POSTGRES_PASSWORD' > .env.dev
-            ls -la
-            cat .env.dev
-      - run:
           name: Install dependencies
           command: make install-deps
       - run:
@@ -38,6 +32,15 @@ jobs:
             echo "Image creation in progress.."
             docker-compose build --no-cache
             echo "Image creation done."
+      - run:
+          name: Docker login
+          command: |
+            echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER_ID" --password-stdin
+      - run:
+          name: Docker push
+          command: |
+            echo "Pushing docker image to dockerhub"
+            docker-compose push
 
 workflows:
   dev-workflow:
