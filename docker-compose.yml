@@ -8,7 +8,7 @@ services:
       - proximity_service_app
   proximity_service_app:
     container_name: proximity_service_app
-    image: imsharyan/proximity_service:0.0.1
+    image: imsharyan/proximity_service:1.0.0
     build: .
     expose:
       - 8000
