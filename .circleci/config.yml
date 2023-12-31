@@ -21,11 +21,13 @@ jobs:
       - image: cimg/python:3.12
     steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: set config
           command: |
-            ( set -o posix ; set ) | grep 'APP_ENV\|SQLALCHEMY_DATABASE_URI_PROD' > .env.prod
-            ( set -o posix ; set ) | grep 'POSTGRES_DB\|POSTGRES_USER\|POSTGRES_PASSWORD' > .env.prod.db
+            ( set -o posix ; export -p ) | grep 'APP_ENV\|SQLALCHEMY_DATABASE_URI_PROD' > .env.prod
+            ( set -o posix ; export -p ) | grep 'POSTGRES_DB\|POSTGRES_USER\|POSTGRES_PASSWORD' > .env.prod.db
       - run:
           name: Image creation
           command: |
@@ -56,4 +58,4 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - master
