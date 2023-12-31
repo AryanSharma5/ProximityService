@@ -1,9 +1,9 @@
 """Proximity Service application factory
 
 [Todo]:
-    - add gunicorn and nginx for production.
+    - Have some dummy data
+    - Load test production application
 """
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
